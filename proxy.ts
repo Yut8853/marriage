@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 const basicAuthUser = process.env.BASIC_AUTH_USER
 const basicAuthPassword = process.env.BASIC_AUTH_PASSWORD
 
-function unauthorized() {
-  return new NextResponse('Authentication required', {
+function unauthorized(message = 'Authentication required') {
+  return new NextResponse(message, {
     status: 401,
     headers: {
       'WWW-Authenticate': 'Basic realm="Protected"',
@@ -14,7 +14,7 @@ function unauthorized() {
 
 export function proxy(request: NextRequest) {
   if (!basicAuthUser || !basicAuthPassword) {
-    return NextResponse.next()
+    return unauthorized('Basic auth is not configured')
   }
 
   const authHeader = request.headers.get('authorization')
@@ -24,7 +24,14 @@ export function proxy(request: NextRequest) {
   }
 
   const encodedCredentials = authHeader.split(' ')[1]
-  const decodedCredentials = atob(encodedCredentials)
+  let decodedCredentials = ''
+
+  try {
+    decodedCredentials = atob(encodedCredentials)
+  } catch {
+    return unauthorized()
+  }
+
   const separatorIndex = decodedCredentials.indexOf(':')
 
   if (separatorIndex === -1) {
