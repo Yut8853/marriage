@@ -150,10 +150,10 @@ export function SceneBackground({ className = '' }: { className?: string }) {
     >
       <div
         ref={sceneLayerRef}
-        className="scene-webgl absolute inset-0 [&>canvas]:absolute [&>canvas]:inset-0 [&>canvas]:h-full! [&>canvas]:w-full!"
+        className="scene-webgl absolute inset-0 z-10 [&>canvas]:absolute [&>canvas]:inset-0 [&>canvas]:h-full! [&>canvas]:w-full!"
       />
-      <div className="scene-fallback absolute inset-0 bg-[linear-gradient(115deg,#b8c4ff_0%,#eef2ff_58%,#ddf9ff_100%)]" />
-      <div className="pop-background absolute inset-0 opacity-0">
+      <div className="scene-fallback absolute inset-0 z-0 bg-[linear-gradient(115deg,#b8c4ff_0%,#eef2ff_58%,#ddf9ff_100%)]" />
+      <div className="pop-background absolute inset-0 z-20 opacity-0">
         <div className="absolute inset-0 bg-[#fbfeff]" />
         <div className="pop-grid absolute inset-0" />
         <div className="pop-shape pop-shape-sky" />
