@@ -137,7 +137,7 @@ export function Footer() {
 
             {/* Social links */}
             <div className="mt-6">
-              <p className="text-xs text-white/50 mb-3">Follow</p>
+              <p className="text-xs text-white/50 mb-3">Follow  </p>
               <div className="flex gap-2">
                 {socialLinks.map((social) => (
                   <Link

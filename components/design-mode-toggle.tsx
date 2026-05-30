@@ -15,6 +15,9 @@ export function DesignModeToggle() {
     const nextMode = storedMode === 'elegant' ? 'elegant' : 'pop'
     setMode(nextMode)
     document.documentElement.dataset.design = nextMode
+    window.dispatchEvent(
+      new CustomEvent('design-mode-change', { detail: nextMode })
+    )
   }, [])
 
   const toggleMode = () => {

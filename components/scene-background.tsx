@@ -73,7 +73,7 @@ function loadUnicornStudio() {
 }
 
 export function SceneBackground({ className = '' }: { className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const sceneLayerRef = useRef<HTMLDivElement>(null)
   const [designMode, setDesignMode] = useState<DesignMode>('pop')
 
   useEffect(() => {
@@ -95,21 +95,25 @@ export function SceneBackground({ className = '' }: { className?: string }) {
 
   useEffect(() => {
     if (designMode === 'pop') {
+      sceneLayerRef.current?.replaceChildren()
       return
     }
 
     let cancelled = false
     let scene: UnicornScene | null = null
+    const sceneLayer = sceneLayerRef.current
+
+    sceneLayer?.replaceChildren()
 
     loadUnicornStudio()
       .then(() => {
-        if (cancelled || !containerRef.current) {
+        if (cancelled || !sceneLayer) {
           return
         }
 
         return window.UnicornStudio?.addScene?.({
           filePath: scenePath,
-          element: containerRef.current,
+          element: sceneLayer,
           scale: 1,
           lazyLoad: false,
           ariaLabel: 'Bokeh gradient background',
@@ -124,6 +128,9 @@ export function SceneBackground({ className = '' }: { className?: string }) {
           }
 
           scene = loadedScene
+          requestAnimationFrame(() => {
+            window.dispatchEvent(new Event('resize'))
+          })
         }
       })
       .catch((error) => {
@@ -133,14 +140,18 @@ export function SceneBackground({ className = '' }: { className?: string }) {
     return () => {
       cancelled = true
       scene?.destroy?.()
+      sceneLayer?.replaceChildren()
     }
   }, [designMode])
 
   return (
     <div
-      ref={containerRef}
-      className={`scene-background pointer-events-none fixed inset-0 z-0 h-screen overflow-hidden bg-[#dfe9ff] [&>canvas]:absolute [&>canvas]:inset-0 [&>canvas]:h-full! [&>canvas]:w-full! ${className}`}
+      className={`scene-background pointer-events-none fixed inset-0 z-0 h-screen overflow-hidden bg-[#dfe9ff] ${className}`}
     >
+      <div
+        ref={sceneLayerRef}
+        className="scene-webgl absolute inset-0 [&>canvas]:absolute [&>canvas]:inset-0 [&>canvas]:h-full! [&>canvas]:w-full!"
+      />
       <div className="scene-fallback absolute inset-0 bg-[linear-gradient(115deg,#b8c4ff_0%,#eef2ff_58%,#ddf9ff_100%)]" />
       <div className="pop-background absolute inset-0 opacity-0">
         <div className="absolute inset-0 bg-[#fbfeff]" />

@@ -168,7 +168,7 @@ body {
   font-feature-settings: 'palt';
 }
 
-.scene-background > canvas,
+.scene-webgl,
 .scene-fallback,
 .pop-background {
   transition: opacity 420ms ease;
@@ -442,7 +442,7 @@ body {
   color: #0f766e;
 }
 
-:root[data-design='pop'] .scene-background > canvas,
+:root[data-design='pop'] .scene-webgl,
 :root[data-design='pop'] .scene-fallback {
   opacity: 0;
 }
