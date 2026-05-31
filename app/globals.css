@@ -455,6 +455,15 @@ body {
   display: block;
 }
 
+:root[data-design='pop'] .hero-heading-highlight {
+  background: linear-gradient(
+    to top,
+    rgba(56, 189, 248, 0.34) 0%,
+    rgba(45, 212, 191, 0.34) 48%,
+    transparent 48%
+  );
+}
+
 :root[data-design='pop'] .rounded-3xl {
   border-radius: 1.75rem;
 }

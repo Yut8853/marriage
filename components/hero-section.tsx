@@ -42,7 +42,7 @@ export function HeroSection() {
 
             {/* Main Heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight text-foreground mb-6">
-              <span className="text-balance decoration-clone bg-[linear-gradient(to_top,rgba(56,189,248,0.34)_0%,rgba(45,212,191,0.34)_48%,transparent_48%)] px-1">
+              <span className="hero-heading-highlight text-balance decoration-clone px-1">
                 茨城で理想のカラダとパートナーを見つけ、
                 <br />
                 運命の出会いを。
